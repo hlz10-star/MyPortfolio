@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Hannah Zheng | Bioengineering Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+<style>
+  :root {
+    --bg:        #f4f7f4;
+    --surface:   #ffffff;
+    --teal-dark: #00403a;
+    --teal:      #006b5f;
+    --teal-mid:  #008f7a;
+    --teal-lt:   #4db6a2;
+    --teal-pale: #d0ece8;
+    --gold:      #c8a84b;
+    --gold-lt:   #f0e0a0;
+    --text:      #1a2e2b;
+    --muted:     #4d6b65;
+    --border:    #c4dbd7;
+    --radius:    14px;
+    --serif:     'DM Serif Display', Georgia, serif;
+    --sans:      'DM Sans', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* ── NAVBAR ── */
+  .navbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--teal-dark);
+    display: flex;
+    align-items: stretch;
+    padding: 0 32px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.18);
+  }
+ .nav-brand {
+    font-family: var(--serif);
+    color: var(--teal-pale);
+    font-size: 1.15rem;
+    display: flex;
+    align-items: center;
+    letter-spacing: 0.02em;
+    padding: 16px 0;
+    margin-right: 40px;
+    user-select: none;
+  }
+  .nav-link {
+    color: #b2d8d2;
+    font-size: 0.9rem;
+    font-weight: 500;
+    padding: 0 18px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    border: none;
+    background: none;
+    text-decoration: none;
+    transition: color 0.2s, background 0.2s;
+    letter-spacing: 0.03em;
+    position: relative;
+  }
+  .nav-link:hover, .nav-link.active {
+    color: #fff;
+    background: rgba(255,255,255,0.07);
+  }
+  .nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 18px; right: 18px;
+    height: 2px;
+    background: var(--gold);
+    border-radius: 2px 2px 0 0;
+  }
+
+  /* dropdown */
+  .dropdown { position: relative; display: flex; align-items: stretch; }
+  .dropdown-panel {
+    display: none;
+    position: absolute;
+    top: 100%; left: 0;
+    min-width: 210px;
+    background: var(--teal-dark);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-top: 2px solid var(--gold);
+    border-radius: 0 0 var(--radius) var(--radius);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.25);
+    overflow: hidden;
+    animation: slideDown 0.18s ease;
+  }
+  @keyframes slideDown {
+    from { opacity: 0; transform: translateY(-6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .dropdown:hover .dropdown-panel { display: block; }
+  .dropdown-panel a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 20px;
+    color: #b2d8d2;
+    font-size: 0.88rem;
+    text-decoration: none;
+    transition: background 0.15s, color 0.15s;
+    cursor: pointer;
+  }
+  .dropdown-panel a:hover { background: rgba(255,255,255,0.08); color: #fff; }
+  .dropdown-panel a .tag {
+    font-size: 0.72rem;
+    background: var(--teal-mid);
+    color: #fff;
+    padding: 2px 7px;
+    border-radius: 20px;
+    margin-left: auto;
+    font-weight: 600;
+  }
+
+  /* ── PAGE SHELL ── */
+  .page { display: none; }
+  .page.active { display: block; animation: fadeIn 0.3s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, var(--teal-dark) 0%, var(--teal) 60%, var(--teal-mid) 100%);
+    padding: 80px 40px 72px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='52' viewBox='0 0 60 52'%3E%3Cpolygon points='30,2 58,16 58,36 30,50 2,36 2,16' fill='none' stroke='rgba(255,255,255,0.06)' stroke-width='1'/%3E%3C/svg%3E");
+    background-size: 60px 52px;
+    opacity: 1;
+    pointer-events: none;
+  }
+  .hero-name {
+    font-family: var(--serif);
+    font-size: clamp(2.8rem, 6vw, 4.5rem);
+    color: #fff;
+    letter-spacing: -0.01em;
+    position: relative;
+    line-height: 1.1;
+    margin-bottom: 12px;
+  }
+  .hero-sub {
+    font-size: 1.05rem;
+    color: var(--teal-pale);
+    font-weight: 300;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    position: relative;
+    margin-bottom: 28px;
+  }
+  .hero-divider {
+    width: 48px;
+    height: 2px;
+    background: var(--gold);
+    margin: 0 auto;
+    border-radius: 2px;
+    position: relative;
+  }
+
+  /* ── MAIN LAYOUT ── */
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 56px 24px 80px;
+  }
+
+  /* ── ABOUT GRID ── */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 260px;
+    gap: 48px;
+    align-items: start;
+    margin-bottom: 60px;
+  }
+  @media (max-width: 720px) {
+    .about-grid { grid-template-columns: 1fr; }
+    .about-photo { max-width: 240px; margin: 0 auto; }
+  }
+  .section-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--teal-mid);
+    margin-bottom: 10px;
+  }
+  .section-title {
+    font-family: var(--serif);
+    font-size: 2rem;
+    color: var(--teal-dark);
+    margin-bottom: 20px;
+    line-height: 1.2;
+  }
+  .about-body {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: var(--muted);
+  }
+  .about-body p { margin-bottom: 14px; }
+  .about-body strong { color: var(--teal-dark); font-weight: 600; }
+
+  .about-photo {
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0,64,58,0.18);
+    aspect-ratio: 3/4;
+    background: var(--teal-pale);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .about-photo img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .photo-placeholder {
+    font-size: 0.82rem;
+    color: var(--teal-mid);
+    text-align: center;
+    padding: 20px;
+    font-style: italic;
+  }
+
+  /* contact cards */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 14px;
+    margin-top: 40px;
+  }
+  .contact-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    text-decoration: none;
+    color: var(--text);
+    transition: box-shadow 0.2s, border-color 0.2s, transform 0.18s;
+  }
+  .contact-card:hover {
+    box-shadow: 0 6px 24px rgba(0,107,95,0.12);
+    border-color: var(--teal-lt);
+    transform: translateY(-2px);
+  }
+  .contact-icon {
+    width: 36px; height: 36px;
+    border-radius: 8px;
+    background: var(--teal-pale);
+    color: var(--teal);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+  .contact-info { overflow: hidden; }
+  .contact-label { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 2px; }
+  .contact-value { font-size: 0.88rem; font-weight: 500; color: var(--teal-dark); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+  /* ── PROJECT PAGE ── */
+  .project-hero {
+    background: linear-gradient(120deg, var(--teal-dark), var(--teal-mid));
+    border-radius: var(--radius);
+    padding: 40px 36px;
+    color: #fff;
+    margin-bottom: 36px;
+    position: relative;
+    overflow: hidden;
+  }
+  .project-hero::after {
+    content: attr(data-num);
+    position: absolute;
+    right: 28px; bottom: -16px;
+    font-family: var(--serif);
+    font-size: 8rem;
+    color: rgba(255,255,255,0.07);
+    line-height: 1;
+    user-select: none;
+  }
+  .project-num {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold-lt);
+    margin-bottom: 10px;
+  }
+  .project-title {
+    font-family: var(--serif);
+    font-size: 2rem;
+    margin-bottom: 14px;
+  }
+  .project-tagline {
+    font-size: 1rem;
+    color: rgba(255,255,255,0.75);
+    font-weight: 300;
+    max-width: 560px;
+  }
+
+  .project-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 32px;
+  }
+  @media (max-width: 680px) { .project-body { grid-template-columns: 1fr; } }
+
+  .project-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+  }
+  .card-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--teal-mid);
+    margin-bottom: 10px;
+  }
+  .card-body {
+    font-size: 0.95rem;
+    line-height: 1.75;
+    color: var(--muted);
+  }
+
+  .photo-box {
+    background: var(--teal-pale);
+    border: 2px dashed var(--border);
+    border-radius: var(--radius);
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--teal-mid);
+    font-size: 0.85rem;
+    text-align: center;
+    gap: 8px;
+  }
+  .photo-box .icon { font-size: 2rem; }
+
+  .video-box {
+    background: #1a2e2b;
+    border-radius: var(--radius);
+    height: 240px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--teal-pale);
+    font-size: 0.9rem;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  .play-btn {
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    background: var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem;
+    cursor: pointer;
+  }
+
+  .btn-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 22px;
+    border-radius: 8px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    transition: filter 0.2s, transform 0.15s;
+  }
+  .btn:hover { filter: brightness(1.08); transform: translateY(-1px); }
+  .btn-primary { background: var(--teal-dark); color: #fff; }
+  .btn-outline { background: transparent; color: var(--teal-dark); border: 2px solid var(--teal-dark); }
+  .btn-gold { background: var(--gold); color: #1a1a1a; }
+
+  .cornerstone-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: var(--gold-lt);
+    color: #7a5c00;
+    border: 1px solid var(--gold);
+    border-radius: 40px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 14px;
+    margin-bottom: 14px;
+  }
+
+  footer {
+    text-align: center;
+    padding: 32px 24px;
+    font-size: 0.82rem;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+  }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <span class="nav-brand">Hannah Zheng</span>
+  <button class="nav-link active" onclick="showPage('home', this)">Home</button>
+  <div class="dropdown">
+    <button class="nav-link">Projects ▾</button>
+    <div class="dropdown-panel">
+      <a onclick="showPage('p1', null)">Timber Composite</a>
+      <a onclick="showPage('p2', null)">Rube Goldberg</a>
+      <a onclick="showPage('p3', null)">Designing Flavors</a>
+      <a onclick="showPage('p4', null)">D=project 4</a>
+      <a onclick="showPage('p5', null)">Foam Core</a>
+      <a onclick="showPage('p6', null)">Service Project</a>
+      <a onclick="showPage('cornerstone', null)">Cornerstone Project</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ══════════════ HOME PAGE ══════════════ -->
+<div id="page-home" class="page active">
+  <div class="hero">
+    <div class="hero-name">Hannah Zheng</div>
+    <div class="hero-sub">Chemistry · University of Pittsburgh</div>
+    <div class="hero-divider"></div>
+  </div>
+
+  <div class="container">
+    <div class="about-grid">
+      <div>
+        <div class="section-label">Who I Am</div>
+        <h2 class="section-title">About Me</h2>
+        <div class="about-body">
+          <p>
+            I am a freshman planning to major in <strong>Chemistry</strong> at the University of Pittsburgh's Dietrich School of Arts &amp; Sciences,
+            with hopes of doing a minor in Bioengineering and a certificate in the Conceptual Foundations of Medicine.
+          </p>
+          <p>
+            Through my coursework and projects, I have developed a deep interest in the intersection of science
+            and human health. I am especially drawn to how chemistry and engineering principles can be applied
+            in clinical and medical settings, and I plan to pursue a career as a physician — with a particular
+            interest in radiology.
+          </p>
+          <p>
+            This portfolio documents the design challenges and final project from <strong>ENGR-0717</strong>.
+            Through this work, I hope to show how an engineering mindset — rooted in problem-solving, iteration,
+            and evidence — can help create technology and solutions that make a meaningful difference in people's lives.
+          </p>
+        </div>
+      </div>
+      <div class="about-photo">
+        <img src="seniorpic.jpg" alt="Hannah Zheng">
+        <div class="photo-placeholder" style="display:none;">📷 Add your photo here<br><small>Replace the src in the &lt;img&gt; tag</small></div>
+      </div>
+    </div>
+
+    <!-- Contact -->
+    <div class="section-label">Get in Touch</div>
+    <h2 class="section-title" style="margin-bottom:4px;">Contact</h2>
+    <div class="contact-grid">
+      <a class="contact-card" href="mailto:hlz10@pitt.edu">
+        <div class="contact-icon">✉️</div>
+        <div class="contact-info">
+          <div class="contact-label">School Email</div>
+          <div class="contact-value">hlz10@pitt.edu</div>
+        </div>
+      </a>
+      <a class="contact-card" href="mailto:hannahzheng72@gmail.com">
+        <div class="contact-icon">📧</div>
+        <div class="contact-info">
+          <div class="contact-label">Personal Email</div>
+          <div class="contact-value">hannahzheng72@gmail.com</div>
+        </div>
+      </a>
+      <a class="contact-card" href="https://www.linkedin.com/in/hannah-zheng-04394b327" target="_blank">
+        <div class="contact-icon">💼</div>
+        <div class="contact-info">
+          <div class="contact-label">LinkedIn</div>
+          <div class="contact-value">linkedin.com/in/hannah-zheng</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ DESIGN CHALLENGE 1 ══════════════ -->
+<div id="page-p1" class="page">
+
+  <!-- Hero Banner -->
+  <div style="background-color:#22316b; padding:80px 40px; text-align:center;">
+    <div style="border:3px solid #fff; display:inline-block; padding:28px 48px; max-width:600px;">
+      <h1 style="font-family:var(--serif); font-size:2.6rem; color:#fff; margin:0; line-height:1.2;">Timber Chair<br>Design Challenge</h1>
+    </div>
+  </div>
+
+  <div class="container">
+
+    <!-- About the Project -->
+    <div style="margin-bottom:56px;">
+      <h2 style="font-family:var(--serif); color:var(--teal-mid); font-size:1.4rem; margin-bottom:12px;">About the Project</h2>
+      <p style="font-size:1rem; line-height:1.8; color:var(--muted); max-width:760px;">In this design challenge, my team was tasked with designing and building a timber chair using provided materials. The chair had to withstand progressively higher weight loads while staying within a strict budget. The goal was to balance strength, cost, and structural efficiency.</p>
+    </div>
+
+    <!-- About the Chair -->
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:start; margin-bottom:56px;">
+      <img src="chair.jpeg" alt="chair w/ paint" style="width:100%; height:100%; object-fit:cover; border-radius:var(--radius);">
+      <div>
+        <h2 style="font-family:var(--serif); color:var(--teal-mid); font-size:1.4rem; margin-bottom:12px;">About the Chair</h2>
+        <p style="font-size:0.97rem; line-height:1.8; color:var(--muted);">Our chair was inspired by a modern dining chair. Our strategy was to use as little wood as possible while maximizing the weight it could hold. To increase stability, we added four beams to the chair legs for extra support. We also replaced the planned cross-beam backrest with a square support frame beneath the seat plate, which significantly improved load distribution. We painted the chair brown and added fabric and thread as decorative elements.</p>
+      </div>
+    </div>
+
+    <!-- Materials Table -->
+    <h2 style="font-family:var(--serif); color:var(--teal-mid); font-size:1.4rem; margin-bottom:16px;">Budget &amp; Materials</h2>
+    <div style="overflow-x:auto; margin-bottom:48px;">
+      <table style="width:100%; border-collapse:collapse; font-size:0.95rem; color:var(--text);">
+        <thead>
+          <tr style="background:var(--teal-dark); color:#fff;">
+            <th style="padding:12px 16px; text-align:left;">Material</th>
+            <th style="padding:12px 16px; text-align:center;">Quantity</th>
+            <th style="padding:12px 16px; text-align:right;">Cost</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="background:var(--surface);">
+            <td style="padding:11px 16px; border-bottom:1px solid var(--border);">1.5" × 3.5" Pine Lumber</td>
+            <td style="padding:11px 16px; border-bottom:1px solid var(--border); text-align:center;">5</td>
+            <td style="padding:11px 16px; border-bottom:1px solid var(--border); text-align:right;">375₣</td>
+          </tr>
+          <tr style="background:var(--bg);">
+            <td style="padding:11px 16px; border-bottom:1px solid var(--border);">0.5" Plywood</td>
+            <td style="padding:11px 16px; border-bottom:1px solid var(--border); text-align:center;">1</td>
+            <td style="padding:11px 16px; border-bottom:1px solid var(--border); text-align:right;">80₣</td>
+          </tr>
+          <tr style="background:var(--surface);">
+            <td style="padding:11px 16px; border-bottom:1px solid var(--border);">Wood Screws</td>
+            <td style="padding:11px 16px; border-bottom:1px solid var(--border); text-align:center;">26</td>
+            <td style="padding:11px 16px; border-bottom:1px solid var(--border); text-align:right;">26₣</td>
+          </tr>
+          <tr style="background:var(--bg);">
+            <td style="padding:11px 16px; border-bottom:1px solid var(--border);">Miter Cut</td>
+            <td style="padding:11px 16px; border-bottom:1px solid var(--border); text-align:center;">1</td>
+            <td style="padding:11px 16px; border-bottom:1px solid var(--border); text-align:right;">10₣</td>
+          </tr>
+          <tr style="background:var(--surface);">
+            <td style="padding:11px 16px; border-bottom:1px solid var(--border);">Paint, Fabric, Thread</td>
+            <td style="padding:11px 16px; border-bottom:1px solid var(--border); text-align:center;">—</td>
+            <td style="padding:11px 16px; border-bottom:1px solid var(--border); text-align:right;">0₣</td>
+          </tr>
+          <tr style="background:var(--teal-pale); font-weight:700;">
+            <td style="padding:12px 16px;">Total</td>
+            <td style="padding:12px 16px; text-align:center;">—</td>
+            <td style="padding:12px 16px; text-align:right;">491₣</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Results -->
+    <div style="margin-bottom:56px;">
+      <h2 style="font-family:var(--serif); color:var(--teal-mid); font-size:1.4rem; margin-bottom:12px;">Results</h2>
+      <p style="font-size:0.97rem; line-height:1.8; color:var(--muted); margin-bottom:16px;">Our chair successfully held <strong style="color:var(--teal-dark);">140 lbs</strong> — including Dr. Sanchez — without failure.</p>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:20px;">
+        <img src="team chair.jpeg" alt="team photo" style="width:100%; height:100%; object-fit:cover; border-radius:var(--radius);">
+        <div style="height:220px; border-radius:var(--radius); overflow:hidden;">
+        <iframe width="100%" height="100%" src="https://www.youtube.com/embed/DzXdyDgNg58?si=4HGLaBxmSqigbNJ1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+      </div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+        <div style="background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:18px 20px;">
+          <div class="card-label">Cost-to-Weight Ratio</div>
+          <div class="card-body">491 ÷ 140 = <strong>3.51 ₣ per lb</strong> of weight supported</div>
+        </div>
+        <div style="background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:18px 20px;">
+          <div class="card-label">Factor of Safety</div>
+          <div class="card-body">140 lbs ÷ 200 lbs = <strong>0.7</strong> — below 1.0, meaning the chair would not meet a 200 lb safety standard, but it exceeded our team's expectations.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Performance Cards -->
+    <div class="project-body" style="margin-bottom:40px;">
+      <div class="project-card">
+        <div class="card-label">What Worked</div>
+        <div class="card-body">Adding a square support frame beneath the seat plate was the key decision that improved stability and load distribution. Extra screws and reinforcement at the joints also reduced wobble despite imperfect leg alignment.</div>
+      </div>
+      <div class="project-card">
+        <div class="card-label">Unexpected Results</div>
+        <div class="card-body">The chair performed better than anticipated. We initially worried the legs weren't perfectly aligned, but the tight fastening and support frame compensated. The wood itself was also stronger than we assumed.</div>
+      </div>
+      <div class="project-card" style="grid-column:1/-1;">
+        <div class="card-label">Real-World Applications</div>
+        <div class="card-body">A composite beam combines materials like steel, concrete, and wood so each contributes its strongest properties. This improves strength-to-weight ratio and reduces material use — the same principles we applied to our chair by combining structural elements to distribute loads more efficiently.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════ DESIGN CHALLENGE 2 ══════════════ -->
+<div id="page-p2" class="page">
+
+  <!-- Hero Banner -->
+  <div style="background-color:#1a2a1a; padding:80px 40px; text-align:center;">
+    <div style="border:3px solid #fff; display:inline-block; padding:28px 48px; max-width:600px;">
+      <h1 style="font-family:var(--serif); font-size:2.6rem; color:#fff; margin:0; line-height:1.2;">Robotic Rube Goldberg<br>Design Challenge</h1>
+    </div>
+  </div>
+
+  <div class="container">
+
+    <!-- About the Project -->
+    <div style="margin-bottom:56px;">
+      <h2 style="font-family:var(--serif); color:var(--teal-mid); font-size:1.4rem; margin-bottom:12px;">About the Project</h2>
+      <p style="font-size:1rem; line-height:1.8; color:var(--muted); max-width:760px;">In this design challenge, my team was tasked with designing and constructing a Rube Goldberg machine to complete a simple task. Our machine was designed to make a bowl of cereal from start to finish — dispensing a spoon, pouring cereal, and adding milk — all triggered by a single human impulse. The machine included simple mechanisms, complex mechanisms, and a mechatronic mechanism incorporating an Arduino microcontroller.</p>
+    </div>
+
+    <!-- Photo Row 1 -->
+  <div style="display:flex; justify-content:center; margin-bottom:48px;">
+      <div class="photo-box" style="height:320px; width:50%; overflow:hidden;">
+        <img src="rube goldberge.jpeg" alt="Rube Goldberg machine" style="width:100%; height:100%; object-fit:cover; border-radius:var(--radius);">
+      </div>
+    </div>
+
+<!-- Mechanism 1 -->
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:start; margin-bottom:48px;">
+      <div>
+        <h2 style="font-family:var(--serif); color:var(--teal-mid); font-size:1.4rem; margin-bottom:12px;">Mechanism 1 — Spoon Drop</h2>
+        <p style="font-size:0.97rem; line-height:1.8; color:var(--muted);">A rope and pulley system was used to spin an arm that pushed a spoon off a ramp and into the bowl. A lower arm simultaneously hit a ball into a domino chain to trigger the following steps. A custom 3D-printed ball bearing was used to reduce friction in the spinning motion.</p>
+      </div>
+      <div class="photo-box" style="height:240px; overflow:hidden;">
+        <img src="spoon.jpeg" alt="Rube Goldberg machine" style="width:100%; height:100%; object-fit:cover; border-radius:var(--radius);">
+      </div>
+    </div>
+
+<!-- Mechanism 2 -->
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:start; margin-bottom:48px;">
+      <div class="photo-box" style="height:240px; overflow:hidden;">
+        <img src="cereal dispenser.jpeg" alt="Rube Goldberg machine" style="width:100%; height:100%; object-fit:cover; object-position:top; border-radius:var(--radius);">
+      </div>
+      <div>
+        <h2 style="font-family:var(--serif); color:var(--teal-mid); font-size:1.4rem; margin-bottom:12px;">Mechanism 2 — Cereal Dispenser</h2>
+        <p style="font-size:0.97rem; line-height:1.8; color:var(--muted);">A colorful domino chain reaction knocked over a lightweight cup containing a small amount of cereal. The dominos transferred kinetic energy through rotational motion, tipping the cup forward so cereal fell into a funnel and into the moving cart's bowl.</p>
+      </div>
+    </div>
+
+    <!-- Mechanism 3 -->
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:start; margin-bottom:48px;">
+      <div>
+        <h2 style="font-family:var(--serif); color:var(--teal-mid); font-size:1.4rem; margin-bottom:12px;">Mechanism 3 — Lever Arm Milk Dispenser</h2>
+        <p style="font-size:0.97rem; line-height:1.8; color:var(--muted);">This was both the complex and mechatronic mechanism. A photoresistor detected when dark liquid was poured into a beaker above it, triggering an Arduino to rotate a servo motor 90°, pouring milk from a cup into the cereal bowl below. A 10kΩ resistor was used to prevent false positives.</p>
+      </div>
+      <div class="photo-box" style="height:240px; overflow:hidden;">
+        <img src="milk arm.jpeg" alt="Rube Goldberg machine" style="width:100%; height:100%; object-fit:cover; border-radius:var(--radius);">
+      </div>
+    </div>
+
+    <!-- Mechanism 4 -->
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:start; margin-bottom:56px;">
+      <div class="photo-box" style="height:240px; overflow:hidden;">
+        <img src="motor car.jpeg" alt="Rube Goldberg machine" style="width:100%; height:100%; object-fit:cover; border-radius:var(--radius);">
+      </div>
+      <div>
+        <h2 style="font-family:var(--serif); color:var(--teal-mid); font-size:1.4rem; margin-bottom:12px;">Mechanism 4 — Motorized Cereal Cart</h2>
+        <p style="font-size:0.97rem; line-height:1.8; color:var(--muted);">A motorized cart with a fishing line attached to a DC motor pulled the cereal bowl forward to catch ingredients at the right time. Activated by a pressure sensor, the motor was coded to stop and start at intervals to sync with the other mechanisms.</p>
+      </div>
+    </div>
+
+    <!-- Results -->
+    <div style="margin-bottom:56px;">
+      <h2 style="font-family:var(--serif); color:var(--teal-mid); font-size:1.4rem; margin-bottom:12px;">Results</h2>
+      <p style="font-size:0.97rem; line-height:1.8; color:var(--muted); margin-bottom:20px;">Our machine did not successfully complete all mechanisms in one run during the in-class demo due to issues with the domino chain. However, every individual mechanism worked correctly on its own. A video of a successful attempt was recorded separately.</p>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:20px;">
+        <div class="photo-box" style="height:220px;"><span class="icon">🎬</span>Add video here</div>
+        <img src="motor car.jpeg" alt="Rube Goldberg machine" style="width:100%; height:100%; object-fit:cover; border-radius:var(--radius);">
+        <div class="photo-box" style="height:220px;"><span class="icon">🖼️</span>Add photo here</div>
+        
+      </div>
+    </div>
+
+    <!-- Reflection Cards -->
+    <div class="project-body" style="margin-bottom:40px;">
+      <div class="project-card">
+        <div class="card-label">What Worked</div>
+        <div class="card-body">Each individual mechanism functioned correctly when tested separately. The motorized cart, spoon drop, and milk dispenser all performed as designed. The 3D-printed bearing significantly reduced friction in the spoon drop mechanism.</div>
+      </div>
+      <div class="project-card">
+        <div class="card-label">Challenges Faced</div>
+        <div class="card-body">The domino chain was the weakest link — inconsistent spacing and lightweight dominos couldn't reliably knock over the cereal cup. Losing a team member mid-project also required us to redistribute work and pivot several designs under time pressure.</div>
+      </div>
+      <div class="project-card">
+        <div class="card-label">My Role</div>
+        <div class="card-body">I designed and built the cereal dropping mechanism using a domino chain reaction. I was responsible for optimizing the domino spacing, cup angle, and cereal amount to ensure consistency. I also helped test the motors and light sensor.</div>
+      </div>
+      <div class="project-card">
+        <div class="card-label">Key Takeaways</div>
+        <div class="card-body">I deepened my understanding of how force, torque, and mass affect motion. I improved my prototyping and iterative design skills through repeated testing of the domino chain, and strengthened my ability to collaborate under time constraints.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ DESIGN CHALLENGE 3 ══════════════ -->
+<div id="page-p3" class="page">
+
+  <!-- Hero Banner -->
+  <div style="background-color:#1a1a2a; padding:80px 40px; text-align:center;">
+    <div style="border:3px solid #fff; display:inline-block; padding:28px 48px; max-width:600px;">
+      <h1 style="font-family:var(--serif); font-size:2.6rem; color:#fff; margin:0; line-height:1.2;">Designing Flavors &amp;<br>Scaling Parties</h1>
+    </div>
+  </div>
+
+  <div class="container">
+
+    <!-- About the Project -->
+    <div style="margin-bottom:56px;">
+      <h2 style="font-family:var(--serif); color:var(--teal-mid); font-size:1.4rem; margin-bottom:12px;">About the Project</h2>
+      <p style="font-size:1rem; line-height:1.8; color:var(--muted); max-width:760px;">In this design challenge, my team applied industrial engineering principles to the challenge of large-scale meal preparation. We designed an Excel-based tool to help chefs scale recipes and manage the logistics of serving anywhere from 50 to 2,000 guests — covering ingredient scaling, production scheduling, labor allocation, and temperature control. We also cooked a stir fry in studio and used it as the basis for our model.</p>
+    </div>
+
+    <!-- Photo Row -->
+    <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; margin-bottom:48px;">
+      <div class="photo-box" style="height:220px; overflow:hidden;">
+        <img src="kitchen.jpeg" alt="Kitchen" style="width:100%; height:100%; object-fit:cover; object-position:center; border-radius:var(--radius);">
+      </div>
+      <div class="photo-box" style="height:220px; overflow:hidden;">
+        <img src="vegetable stir fry.jpeg" alt="Vegetable stir fry" style="width:100%; height:100%; object-fit:cover; object-position:center; border-radius:var(--radius);">
+      </div>
+      <div class="photo-box" style="height:220px; overflow:hidden;">
+        <img src="stir fry final.jpeg" alt="Final stir fry" style="width:100%; height:100%; object-fit:cover; object-position:center; border-radius:var(--radius);">
+      </div>
+    </div>
+
+    <!-- Four Components -->
+    <div style="margin-bottom:56px;">
+      <h2 style="font-family:var(--serif); color:var(--teal-mid); font-size:1.4rem; margin-bottom:20px;">Excel Tool Components</h2>
+      <div class="project-body">
+        <div class="project-card">
+          <div class="card-label">1 · Recipe Scaling Sheet</div>
+          <div class="card-body">A formula-based tool that automatically adjusts ingredient quantities based on guest count. The original recipe serves 10, and a scaling factor is applied: Scaled Quantity = Original Quantity × (Guests ÷ 10). I was responsible for this component.</div>
+        </div>
+        <div class="project-card">
+          <div class="card-label">2 · Production Schedule</div>
+          <div class="card-body">A Gantt chart with 2-minute task increments covering prep, cooking, plating, and serving. Work was evenly distributed among team members, with 8 minutes of unallocated buffer time each for corrections or helping teammates.</div>
+        </div>
+        <div class="project-card">
+          <div class="card-label">3 · Labor Allocation</div>
+          <div class="card-body">A workforce planner calculating the minimum staff needed for different tasks. As guest count increases, staff increases at a decreasing rate to avoid overcrowding — except servers and transporters, which scale proportionally.</div>
+        </div>
+        <div class="project-card">
+          <div class="card-label">4 · Temperature Control</div>
+          <div class="card-body">A manual temperature logging system with a visualization graph and indicator showing whether required food temperatures have been reached, using VLOOKUP to match food types to their required temperatures.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Results -->
+    <div style="margin-bottom:48px;">
+      <h2 style="font-family:var(--serif); color:var(--teal-mid); font-size:1.4rem; margin-bottom:12px;">Results &amp; Reflection</h2>
+      <p style="font-size:0.97rem; line-height:1.8; color:var(--muted);">Our team successfully built a fully functional Excel model covering all four required components. The stir fry recipe was scaled using our tool, and the production schedule kept our team synchronized throughout the cooking session. Key bottlenecks — such as pan heating time and chicken broth preparation — were identified and addressed through strategic task reordering.</p>
+    </div>
+
+    <!-- Downloads -->
+  <div class="btn-row">
+    <a href="https://pitt-my.sharepoint.com/:x:/g/personal/hlz10_pitt_edu/IQBM9UWSfyzkSJiDdkau0E4QAXJBpxxX4p7LuHX-HjEhcBs?e=Iwr5n5" class="btn btn-primary" target="_blank">📊 View Excel Spreadsheet</a>
+    <a href="https://pitt-my.sharepoint.com/:w:/g/personal/hlz10_pitt_edu/IQAvxz2fODZyRYutAUtCC8-SAQW1BTmGkambLvFtLhlkmAE?e=UXWGtf" class="btn btn-outline" target="_blank">📄 View Recipe</a>
+  </div>
+
+  </div>
+</div>
+
+<!-- ══════════════ DESIGN CHALLENGE 4 ══════════════ -->
+<div id="page-p4" class="page">
+  <div class="container">
+    <div class="project-hero" data-num="04">
+      <div class="project-num">Design Challenge · 04</div>
+      <div class="project-title">Project Name Here</div>
+      <div class="project-tagline">One-sentence description of what this project was about and what problem it solved.</div>
+    </div>
+    <div class="project-body">
+      <div class="project-card"><div class="card-label">Project Overview</div><div class="card-body">Describe the challenge you were given and the problem you needed to solve.</div></div>
+      <div class="project-card"><div class="card-label">My Approach</div><div class="card-body">Walk through your design process: ideation, prototyping, testing, and iteration.</div></div>
+      <div class="project-card"><div class="card-label">Tools &amp; Materials</div><div class="card-body">List the tools, software, or materials used.</div></div>
+      <div class="project-card"><div class="card-label">Results &amp; Reflection</div><div class="card-body">Summarize outcomes and what you learned from this challenge.</div></div>
+    </div>
+    <div class="card-label" style="margin-bottom:12px;">Photos</div>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:32px;">
+      <div class="photo-box"><span class="icon">🖼️</span>Add photo here</div>
+      <div class="photo-box"><span class="icon">🖼️</span>Add photo here</div>
+    </div>
+    <div class="btn-row">
+      <a href="#" class="btn btn-primary">📁 View Report</a>
+      <a href="#" class="btn btn-outline">💻 GitHub Repo</a>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ DESIGN CHALLENGE 5 ══════════════ -->
+<div id="page-p5" class="page">
+
+  <!-- Hero Banner -->
+  <div style="background-color:#2a1a2a; padding:80px 40px; text-align:center;">
+    <div style="border:3px solid #fff; display:inline-block; padding:28px 48px; max-width:600px;">
+      <h1 style="font-family:var(--serif); font-size:2.6rem; color:#fff; margin:0; line-height:1.2;">Foam Core Enclosure<br>Design Challenge</h1>
+    </div>
+  </div>
+
+  <div class="container">
+
+    <!-- About the Project -->
+    <div style="margin-bottom:56px;">
+      <h2 style="font-family:var(--serif); color:var(--teal-mid); font-size:1.4rem; margin-bottom:12px;">About the Project</h2>
+      <p style="font-size:1rem; line-height:1.8; color:var(--muted); max-width:760px;">In this design challenge, I created a foam core enclosure with a maximum volume of 1 gallon using foam core prototyping techniques. I then exchanged my enclosure with a partner, who added a hidden compartment to mine — and I added a hidden compartment to theirs. I designed a Pokéball as my enclosure.</p>
+    </div>
+
+    <!-- My Enclosure -->
+    <div style="margin-bottom:56px;">
+      <h2 style="font-family:var(--serif); color:var(--teal-mid); font-size:1.4rem; margin-bottom:16px;">My Enclosure — The Pokéball</h2>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+        <div class="photo-box" style="height:280px; overflow:hidden;">
+          <img src="pokeball before paint.jpeg" alt="Pokeball before paint" style="width:100%; height:100%; object-fit:cover; object-position:center; border-radius:var(--radius);">
+        </div>
+        <div class="photo-box" style="height:280px; overflow:hidden;">
+          <img src="pokeball.jpeg" alt="Finished Pokeball" style="width:100%; height:100%; object-fit:cover; object-position:center; border-radius:var(--radius);">
+        </div>
+      </div>
+      <p style="font-size:0.95rem; line-height:1.8; color:var(--muted); margin-top:16px;">I designed and built a Pokéball-shaped foam core enclosure. The left photo shows the enclosure before painting, and the right shows the final painted version.</p>
+    </div>
+
+    <!-- Hidden Compartment -->
+    <div style="margin-bottom:56px;">
+      <h2 style="font-family:var(--serif); color:var(--teal-mid); font-size:1.4rem; margin-bottom:16px;">Hidden Compartment — Partner's Enclosure</h2>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+        <div class="photo-box" style="height:280px; overflow:hidden;">
+          <img src="contraption full.jpeg" alt="Partner enclosure full view" style="width:100%; height:100%; object-fit:cover; object-position:center 70%; border-radius:var(--radius);">
+        </div>
+        <div class="photo-box" style="height:280px; overflow:hidden;">
+          <img src="contraption inner.jpeg" alt="Hidden compartment inside" style="width:100%; height:100%; object-fit:cover; object-position:center 60%; border-radius:var(--radius);">
+        </div>
+      </div>
+      <p style="font-size:0.95rem; line-height:1.8; color:var(--muted); margin-top:16px;">I received my partner's enclosure and added a hidden compartment inside. The left photo shows the full enclosure from the outside, and the right reveals the hidden compartment within.</p>
+    </div>
+
+    <!-- Reflection Cards -->
+    <div class="project-body" style="margin-bottom:40px;">
+      <div class="project-card">
+        <div class="card-label">Design Process</div>
+        <div class="card-body">I chose to design a Pokéball because of its recognizable spherical shape, which made it a fun challenge to construct using flat foam core sheets. I had to carefully plan the geometry to achieve the rounded form.</div>
+      </div>
+      <div class="project-card">
+        <div class="card-label">Key Takeaways</div>
+        <div class="card-body">This challenge strengthened my foam core prototyping skills and taught me how to think about enclosure design — balancing aesthetics, structural integrity, and hidden functionality within a volume constraint.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ DESIGN CHALLENGE 6 ══════════════ -->
+<div id="page-p6" class="page">
+  <div class="container">
+    <div class="project-hero" data-num="06">
+      <div class="project-num">Service Project · 06</div>
+      <div class="project-title">Project Name Here</div>
+      <div class="project-tagline">One-sentence description of what this project was about and what problem it solved.</div>
+    </div>
+    <div class="project-body">
+      <div class="project-card"><div class="card-label">Project Overview</div><div class="card-body">Describe the challenge you were given and the problem you needed to solve.</div></div>
+      <div class="project-card"><div class="card-label">My Approach</div><div class="card-body">Walk through your design process: ideation, prototyping, testing, and iteration.</div></div>
+      <div class="project-card"><div class="card-label">Tools &amp; Materials</div><div class="card-body">List the tools, software, or materials used.</div></div>
+      <div class="project-card"><div class="card-label">Results &amp; Reflection</div><div class="card-body">Summarize outcomes and what you learned from this challenge.</div></div>
+    </div>
+    <div class="card-label" style="margin-bottom:12px;">Photos</div>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:32px;">
+      <div class="photo-box"><span class="icon">🖼️</span>Add photo here</div>
+      <div class="photo-box"><span class="icon">🖼️</span>Add photo here</div>
+    </div>
+    <div class="btn-row">
+      <a href="#" class="btn btn-primary">📁 View Report</a>
+      <a href="#" class="btn btn-outline">💻 GitHub Repo</a>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ CORNERSTONE PROJECT ══════════════ -->
+<div id="page-cornerstone" class="page">
+  <div class="container">
+    <div class="cornerstone-badge">★ Cornerstone Project</div>
+    <div class="project-hero" data-num="★" style="background: linear-gradient(120deg, #3d2c00, #7a5800, #c8a84b);">
+      <div class="project-num" style="color: #ffe7a0;">Final Class Project · ENGR-0717</div>
+      <div class="project-title">Project Name Here</div>
+      <div class="project-tagline">A longer description of your final class project — what it is, who it's for, and what engineering challenge it addresses.</div>
+    </div>
+
+    <div class="card-label" style="margin-bottom:12px;">2-Minute Project Video</div>
+    <div class="video-box">
+      <div class="play-btn">▶</div>
+      <span>Embed your 2-minute video here</span>
+      <small style="color:#4d6b65; font-size:0.8rem;">Replace this block with a &lt;iframe&gt; or &lt;video&gt; tag</small>
+    </div>
+
+    <div class="project-body">
+      <div class="project-card"><div class="card-label">Problem Statement</div><div class="card-body">What problem does this project address? Why does it matter? Who is the end user or beneficiary?</div></div>
+      <div class="project-card"><div class="card-label">Design Process</div><div class="card-body">Walk through your full design cycle — research, ideation, prototyping, user testing, and refinement.</div></div>
+      <div class="project-card"><div class="card-label">Technical Details</div><div class="card-body">Explain the engineering behind your solution: materials, methods, calculations, software, hardware, or chemistry involved.</div></div>
+      <div class="project-card"><div class="card-label">Outcomes &amp; Impact</div><div class="card-body">What did you build or prove? What were your results? What are the next steps or real-world applications?</div></div>
+    </div>
+
+    <div class="card-label" style="margin-bottom:12px;">Project Photos</div>
+    <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; margin-bottom:32px;">
+      <div class="photo-box"><span class="icon">🖼️</span>Add photo</div>
+      <div class="photo-box"><span class="icon">🖼️</span>Add photo</div>
+      <div class="photo-box"><span class="icon">🖼️</span>Add photo</div>
+    </div>
+
+    <div class="btn-row">
+      <a href="#" class="btn btn-gold">📄 View Full Report</a>
+      <a href="#" class="btn btn-primary">💻 GitHub Repo</a>
+      <a href="#" class="btn btn-outline">📊 View Slides</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  © 2025 Hannah Zheng · Chemistry · University of Pittsburgh · ENGR-0717
+</footer>
+
+<script>
+  function showPage(id, btn) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page-' + id).classList.add('active');
+    document.querySelectorAll('.nav-link').forEach(b => b.classList.remove('active'));
+    if (btn) btn.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+</body>
+</html>
